@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+    <script src="./matrix.js"></script>
+
+    <!-- 定义定点着色器 -->
+    <script id="vertexShader" type="x-shader/x-vertex">
+        attribute vec4 a_Position;
+        uniform mat4 u_ModelMatrix;
+        void main() {
+            gl_Position = u_ModelMatrix * a_Position;
+        }
+    </script>
+
+    <!-- 定义片元着色器 -->
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        void main() {
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+    </script>
+
+    <script>
+        var canvas = document.querySelector("#myCanvas")
+        var gl = canvas.getContext("webgl")
+
+        var program = gl.createProgram()
+
+        
+        var VSHADER_SOURCE = document.querySelector("#vertexShader").textContent    // 顶点着色器
+        var FSHADER_SOURCE = document.querySelector("#fragmentShader").textContent  // 片源着色器
+
+        
+        function createShader(gl, sourceCode, type) {
+            var shader = gl.createShader(type)
+            gl.shaderSource(shader, sourceCode)
+            gl.compileShader(shader)
+            
+            return shader
+        }
+
+        // shader 绑定
+        var vertexShader = createShader(gl, VSHADER_SOURCE, gl.VERTEX_SHADER)
+        var fragmentShader = createShader(gl, FSHADER_SOURCE, gl.FRAGMENT_SHADER)
+
+        // 与两个着色器代码绑定
+        gl.attachShader(program, vertexShader)
+        gl.attachShader(program, fragmentShader)
+
+        gl.linkProgram(program)
+        gl.useProgram(program)
+        gl.program = program
+
+        // 把定点的位置传到我们的shader中
+        function initVertexBuffers(gl) {
+            var vertices = new Float32Array([
+                0, 1, -1, -1 ,1 ,-1, 1 ,-0, 1 ,1,
+            ])
+            var num = 2
+            var n = vertices.length / num
+            var vertexBuffer = gl.createBuffer()
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
+            // 把数据写到缓冲区
+            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
+            // 获取a_Position 的地址
+            var a_Position = gl.getAttribLocation(gl.program, "a_Position")
+            console.log(a_Position)
+            gl.vertexAttribPointer(a_Position, num, gl.FLOAT, false, 0, 0)
+
+            // 启用a_Position
+            gl.enableVertexAttribArray(a_Position)
+            return n
+        }
+
+        var n = initVertexBuffers(gl)
+        gl.clearColor(0, 0, 0, 1)
+
+        var u_ModelMatrix = gl.getUniformLocation(gl.program,"u_ModelMatrix")
+        var modeMatrix = new Matrix4()
+        
+        
+
+        var currentAngle = 0
+        var g_last = Date.now()
+        function animate() {
+            var now = Date.now()
+            var duration = now - g_last
+            g_last = now
+            currentAngle += duration / 1000 * 180
+
+            modeMatrix.setRotate(currentAngle, 1, 1, 0)
+            gl.uniformMatrix4fv(u_ModelMatrix,false,modeMatrix.elements)
+        }
+
+        function tick() {
+            animate()
+            draw()
+            requestAnimationFrame(tick)
+        }
+        
+        // 绘制函数
+        function draw() {
+            gl.clear(gl.COLOR_BUFFER_BIT)
+            gl.drawArrays(gl.TRIANGLES, 0, n)
+        }
+        tick()
+    
+    </script>
+</body>
+</html>
