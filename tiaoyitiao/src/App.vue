@@ -19,7 +19,7 @@ export default {
     this.width = window.innerWidth
     this.height = window.innerHeight
 
-    new Main(this.width, this.height)
+    new Main()
   }
 }
 </script>
