@@ -2,20 +2,24 @@ import { scene } from "../scene/index"
 import Cuboid from "../block/cuboid"
 import Cylinder from "../block/cylinder"
 import ground from "../objects/ground"
+import bottle from "../objects/bottle"
 
 class GamePage {
     constructor(callbacks) {
         this.callbacks = callbacks
         this.scene = scene
         this.ground = ground
+        this.bottle = bottle
     }
 
     init() {
         // this.traingleShape()
         this.scene.init()
         this.ground.init()
+        this.bottle.init()
         this.addInitBlock()
         this.addGround()
+        this.addBottle()
         this.render()
     }
 
@@ -28,6 +32,10 @@ class GamePage {
 
     addGround() {
         this.scene.instance.add(this.ground.instance)
+    }
+
+    addBottle() {
+        this.scene.instance.add(this.bottle.instance)
     }
 
     render() {
