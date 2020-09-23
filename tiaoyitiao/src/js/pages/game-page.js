@@ -20,6 +20,7 @@ class GamePage {
         this.addInitBlock()
         this.addGround()
         this.addBottle()
+        this.bottle.showUp()
         this.render()
     }
 
@@ -40,7 +41,14 @@ class GamePage {
 
     render() {
         this.scene.render()
-        // requestAnimationFrame(this.render.bind(this))
+        if(this.bottle) {
+            this.bottle.update()
+        }
+
+        if(TWEEN) {
+            TWEEN.update()
+        }
+        requestAnimationFrame(this.render.bind(this))
     }
 
     show() {

@@ -5,6 +5,7 @@ import blockConf from "../conf/block-conf"
 import headImage from  "../../assets/images/head.png"
 import bottomImage from  "../../assets/images/bottom.png"
 import meddleImage from "../../assets/images/bottom.png"
+import TWEEN from "@tweenjs/tween.js"
 
 class Bottle {
     constructor() {
@@ -12,7 +13,7 @@ class Bottle {
     }
 
     init() {
-        let loader = new THREE.TextureLoader()
+        this.loader = new THREE.TextureLoader()
         this.instance = new THREE.Object3D()
         this.instance.name = "bottle"
         let { x, y, z } = bottleConf.initPosition
@@ -22,32 +23,25 @@ class Bottle {
         let bottle = new THREE.Object3D()
         let body = new THREE.Object3D()
         
-        const specularTexture = loader.load(headImage)
-        console.log(specularTexture)
-        let specularMaterial = new THREE.MeshBasicMaterial({
-            map: specularTexture
-        })
-
-        let headRadius = bottleConf.headRadius
+        const { headTMaterial, meddleMaterial, bottomMaterial } = this.loadTexture()
+        const headRadius = bottleConf.headRadius
 
         // 头部
         let head = new THREE.Mesh(
             new THREE.OctahedronGeometry(headRadius),
-            specularMaterial
+            bottomMaterial
         )
         head.position.y = 3.57143 * headRadius
         head.castShadow = true
+        this.head = head
         bottle.add(head)
         
         // 中间
-        const meddleTexture = loader.load(meddleImage)
-        const meddleMaterial = new THREE.MeshBasicMaterial({
-            map: meddleTexture
-        })
+        
 
         let meddle = new THREE.Mesh(
             new THREE.CylinderGeometry(headRadius/1.4, headRadius/1.4 * 0.88, headRadius * 1.2, 20),
-            meddleMaterial
+            bottomMaterial
         )
         meddle.position.y = 1.3857 * headRadius
         meddle.castShadow = true
@@ -58,15 +52,11 @@ class Bottle {
         topGeometry.scale(1, 0.54, 1)
         let top = new THREE.Mesh(
             topGeometry,
-            specularMaterial
+            bottomMaterial
         )
-        top.position.y = 1.8143 * headRadius
+        top.position.y = 1.9143 * headRadius
         body.add(top)
         
-        const bottomTexture = loader.load(bottomImage)
-        const bottomMaterial = new THREE.MeshBasicMaterial({
-            map: bottomTexture
-        })
         // 底部
         let bottom = new THREE.Mesh(
             new THREE.CylinderGeometry(0.62857 * headRadius, 0.907143 * headRadius, 1.91423 * headRadius, 20),
@@ -76,7 +66,44 @@ class Bottle {
         body.add(bottom)
         bottle.position.y = 2.0
         bottle.add(body)
+        this.bottle = bottle
         this.instance.add(bottle)
+    }
+
+    loadTexture() {
+        const headTexture = this.loader.load(headImage)
+        const headTMaterial = new THREE.MeshBasicMaterial({
+            map: headTexture
+        })
+
+        const meddleTexture = this.loader.load(meddleImage)
+        const meddleMaterial = new THREE.MeshBasicMaterial({
+            map: meddleTexture
+        })
+
+        const bottomTexture = this.loader.load(bottomImage)
+        const bottomMaterial = new THREE.MeshBasicMaterial({
+            map: bottomTexture
+        })
+
+        return { headTMaterial, meddleMaterial, bottomMaterial }
+    }
+
+    update() {
+        this.head.rotation.y += 0.02
+    }
+
+    showUp() {
+        console.log(TWEEN)
+        const coords = { y: 10 }
+        this.Tween = new TWEEN.Tween(coords).to({
+            y: 2
+        }, 1000)
+        .easing(TWEEN.Easing.Bounce.Out)
+        .onUpdate(() => {
+            this.bottle.position.y = coords.y
+        })
+        .start() 
     }
 }
 

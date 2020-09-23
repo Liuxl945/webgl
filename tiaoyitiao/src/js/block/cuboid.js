@@ -1,5 +1,8 @@
 import BaskBock from "./base"
 
+
+
+import headImage from  "../../assets/images/golf_top.png"
 class Cuboid extends BaskBock {
     constructor(x, y, z, width) {
         super("cuboid")
