@@ -1,11 +1,53 @@
+import { scene } from "../scene/index"
+import Cuboid from "../block/cuboid"
+import Cylinder from "../block/cylinder"
+import ground from "../objects/ground"
+
 class GamePage {
     constructor(callbacks) {
         this.callbacks = callbacks
+        this.scene = scene
+        this.ground = ground
     }
 
     init() {
-        console.log("game-page init")
+        // this.traingleShape()
+        this.scene.init()
+        this.ground.init()
+        this.addInitBlock()
+        this.addGround()
+        this.render()
+    }
 
+    addInitBlock() {
+        const cuboid = new Cuboid(-15, 0, 0)
+        const cylinder = new Cylinder(23, 0, 0)
+        this.scene.instance.add(cuboid.instance)
+        this.scene.instance.add(cylinder.instance)
+    }
+
+    addGround() {
+        this.scene.instance.add(this.ground.instance)
+    }
+
+    render() {
+        this.scene.render()
+        // requestAnimationFrame(this.render.bind(this))
+    }
+
+    show() {
+        // this.mesh.visible = true
+    }
+
+    hide() {
+        // this.mesh.visible = false
+    }
+
+    restart() {
+        console.log("game-page restart")
+    }
+
+    traingleShape() {
         let width = window.innerWidth
         let height = window.innerHeight
         var canvas = document.querySelector("#myCanvas")
@@ -40,15 +82,14 @@ class GamePage {
         mesh.position.y = 0
         mesh.position.z = 1
 
-        scene.add(mesh)
+        // scene.add(mesh)
 
         
-
-        var camera = new THREE.OrthographicCamera(width / - 2, width / 2, height / 2, height / - 2, -1000, 1000 )
-        camera.position.x = 0
-        camera.position.y = 0
-        camera.position.z = 0
-        camera.lookAt(new THREE.Vector3(0, 0, 1))
+        var camera = new THREE.OrthographicCamera(-30, 30, 56, -56, -100, 85 )
+        camera.position.x = -10
+        camera.position.y = 10
+        camera.position.z = 10
+        camera.lookAt(new THREE.Vector3(0, 0, 0))
 
         var currentAngle = 0
         var lastTimestamp = Date.now()
@@ -65,11 +106,6 @@ class GamePage {
         renderer.setClearColor(new THREE.Color(0x000000))
         renderer.setSize(width, height)
 
-
-        setTimeout(() => {
-            this.callbacks.showGameOverPage()
-        }, 2000)
-
         function render() {
             animate()
             mesh.rotation.set(0, currentAngle, 0)
@@ -79,18 +115,6 @@ class GamePage {
             requestAnimationFrame(render)
         }
         render()
-    }
-
-    show() {
-        this.mesh.visible = true
-    }
-
-    hide() {
-        this.mesh.visible = false
-    }
-
-    restart() {
-        console.log("game-page restart")
     }
 
 }
