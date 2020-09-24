@@ -38,13 +38,12 @@ class GamePage {
     }
 
     touchStartCallback = () => {
-        console.log("touchStartCallback")
-
-        this.bottle.rotate()
+        this.bottle.strink()
     }
 
-    touchEndCallback() {
-        console.log("touchStartCallback")
+    touchEndCallback = () => {
+        this.bottle.stop()
+        this.bottle.rotate()
     }
 
     addInitBlock() {
@@ -65,10 +64,10 @@ class GamePage {
     render() {
         this.scene.render()
 
-        // // 物体开始下落更新
-        // if(this.bottle.Tween) {
-        //     this.bottle.Tween.update()
-        // }
+        // 物体开始下落更新
+        if(this.bottle) {
+            this.bottle.update()
+        }
         // // 瓶子更新
         // if(this.humanTween) {
         //     this.humanTween.update()

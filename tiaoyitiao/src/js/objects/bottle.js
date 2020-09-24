@@ -12,6 +12,8 @@ class Bottle {
         this.instance = null
         this.direction = 0
         this.axis = null
+        this.status = "stop"
+        this.scale = 1
     }
 
     init() {
@@ -71,6 +73,40 @@ class Bottle {
         this.human.add(this.body)
         this.bottle.add(this.human)
         this.instance.add(this.bottle)
+    }
+
+    strink() {
+        this.status = "strink"
+    }
+
+    stop() {
+        this.scale = 1
+        this.status = "stop"
+    }
+
+    _strink() {
+        const MIN_SCALE = 0.55
+        const HORIZON_DELTA_SCALE = 0.007
+        const DELTA_SCALE = 0.005
+        const HEAD_DELTA = 0.03
+        
+        this.scale -= DELTA_SCALE
+        this.scale = Math.max(MIN_SCALE, this.scale)
+        
+        if(this.scale <= MIN_SCALE) {
+            return
+        }
+        
+
+        this.body.scale.y = this.scale
+        this.body.scale.x += HORIZON_DELTA_SCALE
+        this.body.scale.z += HORIZON_DELTA_SCALE
+
+        this.head.position.y -= HEAD_DELTA
+        
+        
+        const bottleDeltaY = HEAD_DELTA / 2
+        // this.instance.position.y -= bottleDeltaY
     }
 
     rotate() {
@@ -193,7 +229,10 @@ class Bottle {
         return { headTMaterial, meddleMaterial, bottomMaterial }
     }
 
-    update() {
+    update = () => {
+        if(this.status === "strink") {
+            this._strink()
+        }
         this.head.rotation.y += 0.02
     }
 
