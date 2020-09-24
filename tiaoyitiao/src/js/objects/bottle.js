@@ -81,7 +81,7 @@ class Bottle {
             }, 140).start()
             this.humanTween2 = new TWEEN.Tween(this.human.rotation).to({
                 z: this.human.rotation.z - 2 * Math.PI
-            }, 180).start() 
+            }, 180).delay(140).start() 
             this.humanTween.chain(this.humanTween2) //在执行完humanTween之后执行humanTween2
 
 
@@ -93,11 +93,11 @@ class Bottle {
             this.headTween2 = new TWEEN.Tween(this.head.position).to({
                 x: this.head.position.x - 0.45 * scale,
                 y: this.head.position.y - 0.9 * scale,
-            }, 100).start()
+            }, 100).delay(100).start()
             this.headTween3 = new TWEEN.Tween(this.head.position).to({
                 x: 0,
                 y: 3.57143 * bottleConf.headRadius,
-            }, 150).start()
+            }, 150).delay(250).start()
             this.headTween.chain(this.headTween2) //在执行完humanTween之后执行humanTween2
             this.headTween2.chain(this.headTween3)//在执行完humanTween2之后执行humanTween3
 
@@ -112,12 +112,12 @@ class Bottle {
                 x: Math.max(scale, 1.2),
                 y: Math.min(0.9 / scale, 0.7),
                 z: Math.max(scale, 1.2)
-            }, 100).start()
+            }, 100).delay(100).start()
             this.bodyTween3 = new TWEEN.Tween(this.body.scale).to({
                 x: 1,
                 y: 1,
                 z: 1
-            }, 300).start()
+            }, 300).delay(200).start()
             this.bodyTween.chain(this.bodyTween2) //在执行完humanTween之后执行humanTween2
             this.bodyTween2.chain(this.bodyTween3)//在执行完humanTween2之后执行humanTween3
 
@@ -127,7 +127,7 @@ class Bottle {
             }, 140).start()
             this.humanTween2 = new TWEEN.Tween(this.human.rotation).to({
                 x: this.human.rotation.x - 2 * Math.PI
-            }, 180).start() 
+            }, 180).delay(140).start() 
             this.humanTween.chain(this.humanTween2) //在执行完humanTween之后执行humanTween2
 
 
@@ -139,11 +139,11 @@ class Bottle {
             this.headTween2 = new TWEEN.Tween(this.head.position).to({
                 z: this.head.position.x - 0.45 * scale,
                 y: this.head.position.y - 0.9 * scale,
-            }, 100).start()
+            }, 100).delay(100).start()
             this.headTween3 = new TWEEN.Tween(this.head.position).to({
                 z: 0,
                 y: 3.57143 * bottleConf.headRadius,
-            }, 150).start()
+            }, 150).delay(200).start()
             this.headTween.chain(this.headTween2) //在执行完humanTween之后执行humanTween2
             this.headTween2.chain(this.headTween3)//在执行完humanTween2之后执行humanTween3
 
@@ -158,12 +158,12 @@ class Bottle {
                 x: Math.max(scale, 1.2),
                 y: Math.min(0.9 / scale, 0.7),
                 z: Math.max(scale, 1.2)
-            }, 50).start()
+            }, 50).delay(50).start()
             this.bodyTween3 = new TWEEN.Tween(this.body.scale).to({
                 x: 1,
                 y: 1,
                 z: 1
-            }, 200).start()
+            }, 200).delay(100).start()
             this.bodyTween.chain(this.bodyTween2) //在执行完humanTween之后执行humanTween2
             this.bodyTween2.chain(this.bodyTween3)//在执行完humanTween2之后执行humanTween3
         }
