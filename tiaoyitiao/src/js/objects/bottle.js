@@ -10,6 +10,8 @@ import TWEEN from "@tweenjs/tween.js"
 class Bottle {
     constructor() {
         this.instance = null
+        this.direction = 0
+        this.axis = null
     }
 
     init() {
@@ -20,8 +22,9 @@ class Bottle {
         // + blockConf.height/2
         this.instance.position.set(x, y + blockConf.height/2, z)
 
-        let bottle = new THREE.Object3D()
-        let body = new THREE.Object3D()
+        this.bottle = new THREE.Object3D()
+        this.human = new THREE.Object3D()
+        this.body = new THREE.Object3D()
         
         const { headTMaterial, meddleMaterial, bottomMaterial } = this.loadTexture()
         const headRadius = bottleConf.headRadius
@@ -34,7 +37,7 @@ class Bottle {
         head.position.y = 3.57143 * headRadius
         head.castShadow = true
         this.head = head
-        bottle.add(head)
+        this.human.add(head)
         
         // 中间
         
@@ -45,7 +48,7 @@ class Bottle {
         )
         meddle.position.y = 1.3857 * headRadius
         meddle.castShadow = true
-        body.add(meddle)
+        this.body.add(meddle)
         
         // 中间顶部
         let topGeometry = new THREE.SphereGeometry(headRadius/1.4, 20, 20)
@@ -55,7 +58,7 @@ class Bottle {
             bottomMaterial
         )
         top.position.y = 1.9143 * headRadius
-        body.add(top)
+        this.body.add(top)
         
         // 底部
         let bottom = new THREE.Mesh(
@@ -63,11 +66,112 @@ class Bottle {
             bottomMaterial
         )
         bottom.castShadow = true
-        body.add(bottom)
-        bottle.position.y = 2.0
-        bottle.add(body)
-        this.bottle = bottle
-        this.instance.add(bottle)
+        this.body.add(bottom)
+        this.bottle.position.y = 2.0
+        this.human.add(this.body)
+        this.bottle.add(this.human)
+        this.instance.add(this.bottle)
+    }
+
+    rotate() {
+        const scale = 1.4
+        if(this.direction === 0) {
+            this.humanTween = new TWEEN.Tween(this.human.rotation).to({
+                z: this.human.rotation.z - Math.PI
+            }, 140).start()
+            this.humanTween2 = new TWEEN.Tween(this.human.rotation).to({
+                z: this.human.rotation.z - 2 * Math.PI
+            }, 180).start() 
+            this.humanTween.chain(this.humanTween2) //在执行完humanTween之后执行humanTween2
+
+
+
+            this.headTween = new TWEEN.Tween(this.head.position).to({
+                x: this.head.position.x + 0.45 * scale,
+                y: this.head.position.y + 0.9 * scale,
+            }, 100).start()
+            this.headTween2 = new TWEEN.Tween(this.head.position).to({
+                x: this.head.position.x - 0.45 * scale,
+                y: this.head.position.y - 0.9 * scale,
+            }, 100).start()
+            this.headTween3 = new TWEEN.Tween(this.head.position).to({
+                x: 0,
+                y: 3.57143 * bottleConf.headRadius,
+            }, 150).start()
+            this.headTween.chain(this.headTween2) //在执行完humanTween之后执行humanTween2
+            this.headTween2.chain(this.headTween3)//在执行完humanTween2之后执行humanTween3
+
+
+
+            this.bodyTween = new TWEEN.Tween(this.body.scale).to({
+                x: Math.max(Math.min(1 / scale, 1), 0.7),
+                y: Math.max(scale, 1),
+                z: Math.max(Math.min(1 / scale, 1), 0.7)
+            }, 100).start()
+            this.bodyTween2 = new TWEEN.Tween(this.body.scale).to({
+                x: Math.max(scale, 1.2),
+                y: Math.min(0.9 / scale, 0.7),
+                z: Math.max(scale, 1.2)
+            }, 100).start()
+            this.bodyTween3 = new TWEEN.Tween(this.body.scale).to({
+                x: 1,
+                y: 1,
+                z: 1
+            }, 300).start()
+            this.bodyTween.chain(this.bodyTween2) //在执行完humanTween之后执行humanTween2
+            this.bodyTween2.chain(this.bodyTween3)//在执行完humanTween2之后执行humanTween3
+
+        }else{
+            this.humanTween = new TWEEN.Tween(this.human.rotation).to({
+                x: this.human.rotation.x - Math.PI
+            }, 140).start()
+            this.humanTween2 = new TWEEN.Tween(this.human.rotation).to({
+                x: this.human.rotation.x - 2 * Math.PI
+            }, 180).start() 
+            this.humanTween.chain(this.humanTween2) //在执行完humanTween之后执行humanTween2
+
+
+
+            this.headTween = new TWEEN.Tween(this.head.position).to({
+                z: this.head.position.x + 0.45 * scale,
+                y: this.head.position.y + 0.9 * scale,
+            }, 100).start()
+            this.headTween2 = new TWEEN.Tween(this.head.position).to({
+                z: this.head.position.x - 0.45 * scale,
+                y: this.head.position.y - 0.9 * scale,
+            }, 100).start()
+            this.headTween3 = new TWEEN.Tween(this.head.position).to({
+                z: 0,
+                y: 3.57143 * bottleConf.headRadius,
+            }, 150).start()
+            this.headTween.chain(this.headTween2) //在执行完humanTween之后执行humanTween2
+            this.headTween2.chain(this.headTween3)//在执行完humanTween2之后执行humanTween3
+
+
+
+            this.bodyTween = new TWEEN.Tween(this.body.scale).to({
+                x: Math.max(Math.min(1 / scale, 1), 0.7),
+                y: Math.max(scale, 1),
+                z: Math.max(Math.min(1 / scale, 1), 0.7)
+            }, 50).start()
+            this.bodyTween2 = new TWEEN.Tween(this.body.scale).to({
+                x: Math.max(scale, 1.2),
+                y: Math.min(0.9 / scale, 0.7),
+                z: Math.max(scale, 1.2)
+            }, 50).start()
+            this.bodyTween3 = new TWEEN.Tween(this.body.scale).to({
+                x: 1,
+                y: 1,
+                z: 1
+            }, 200).start()
+            this.bodyTween.chain(this.bodyTween2) //在执行完humanTween之后执行humanTween2
+            this.bodyTween2.chain(this.bodyTween3)//在执行完humanTween2之后执行humanTween3
+        }
+    }
+
+    setDirection(direction, axis) {
+        this.direction = direction
+        this.axis = axis
     }
 
     loadTexture() {
@@ -94,7 +198,6 @@ class Bottle {
     }
 
     showUp() {
-        console.log(TWEEN)
         const coords = { y: 10 }
         this.Tween = new TWEEN.Tween(coords).to({
             y: 2

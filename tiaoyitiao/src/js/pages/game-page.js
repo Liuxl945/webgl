@@ -21,7 +21,30 @@ class GamePage {
         this.addGround()
         this.addBottle()
         this.bottle.showUp()
+        this.bindTouchEvent()
         this.render()
+    }
+
+    bindTouchEvent() {
+        this.canvas = document.querySelector("#myCanvas")
+
+        this.canvas.addEventListener("touchstart", this.touchStartCallback)
+        this.canvas.addEventListener("touchend", this.touchEndCallback)
+    }
+
+    removeTouchEvent() {
+        this.canvas.removeEventListener("touchstart", this.touchStartCallback)
+        this.canvas.removeEventListener("touchend", this.touchEndCallback)
+    }
+
+    touchStartCallback = () => {
+        console.log("touchStartCallback")
+
+        this.bottle.rotate()
+    }
+
+    touchEndCallback() {
+        console.log("touchStartCallback")
     }
 
     addInitBlock() {
@@ -41,9 +64,21 @@ class GamePage {
 
     render() {
         this.scene.render()
-        if(this.bottle) {
-            this.bottle.update()
-        }
+
+        // // 物体开始下落更新
+        // if(this.bottle.Tween) {
+        //     this.bottle.Tween.update()
+        // }
+        // // 瓶子更新
+        // if(this.humanTween) {
+        //     this.humanTween.update()
+        // }
+        // if(this.headTween) {
+        //     this.headTween.update()
+        // }
+        // if(this.bodyTween) {
+        //     this.bodyTween.update()
+        // }
 
         if(TWEEN) {
             TWEEN.update()
