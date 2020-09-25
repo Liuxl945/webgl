@@ -47,10 +47,10 @@ class Bottle {
         
 
         let meddle = new THREE.Mesh(
-            new THREE.CylinderGeometry(headRadius/1.4, headRadius/1.4 * 0.88, headRadius * 1.2, 20),
-            headTMaterial
+            new THREE.CylinderGeometry(headRadius/ 1.4, headRadius/1.4 * 0.88, headRadius * 1.2, 20),
+            bottomMaterial
         )
-        meddle.position.y = 1.3857 * headRadius
+        meddle.position.y = 1.2857 * headRadius
         meddle.castShadow = true
         this.body.add(meddle)
         
