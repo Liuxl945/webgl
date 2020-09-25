@@ -10,6 +10,9 @@ class GamePage {
         this.scene = scene
         this.ground = ground
         this.bottle = bottle
+        this.targetPosition = {
+
+        }
     }
 
     init() {
@@ -38,19 +41,44 @@ class GamePage {
     }
 
     touchStartCallback = () => {
+        this.touchStartTime = Date.now()
         this.bottle.strink()
     }
 
     touchEndCallback = () => {
+        this.touchEndTime = Date.now()
+        const duration = this.touchEndTime - this.touchStartTime
+        this.bottle.velocity.vx = Math.min(duration / 6 , 400)
+        this.bottle.velocity.vx = +this.bottle.velocity.vx.toFixed(2)
+        this.bottle.velocity.vy = Math.min(150 + duration / 20, 400)
+        this.bottle.velocity.vy = +this.bottle.velocity.vy.toFixed(2)
         this.bottle.stop()
         this.bottle.rotate()
+        this.bottle.jump()
+    }
+
+    setDirection(direction) {
+        const currentPosition = {
+            x: this.bottle.instance.position.x,
+            z: this.bottle.instance.position.z,
+        }
+        this.axis = new THREE.Vector3(this.targetPosition.x, this.targetPosition.y, this.targetPosition.z)
+        this.axis.normalize()
+        this.bottle.setDirection(direction, this.axis)
     }
 
     addInitBlock() {
         const cuboid = new Cuboid(-15, 0, 0)
         const cylinder = new Cylinder(23, 0, 0)
+        this.targetPosition = {
+            x: 23,
+            y: 0,
+            z: 0
+        }
+        const initPosition = 0
         this.scene.instance.add(cuboid.instance)
         this.scene.instance.add(cylinder.instance)
+        this.setDirection(initPosition)
     }
 
     addGround() {
@@ -64,7 +92,7 @@ class GamePage {
     render() {
         this.scene.render()
 
-        // 物体开始下落更新
+        // 物体开始下落更新 跟下瓶子的状态
         if(this.bottle) {
             this.bottle.update()
         }

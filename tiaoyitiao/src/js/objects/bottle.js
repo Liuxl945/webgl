@@ -1,10 +1,10 @@
 
 import bottleConf from "../conf/bottle-conf"
 import blockConf from "../conf/block-conf"
-
+import gameConf from "../conf/game-conf"
 import headImage from  "../../assets/images/head.png"
 import bottomImage from  "../../assets/images/bottom.png"
-import meddleImage from "../../assets/images/bottom.png"
+import meddleImage from "../../assets/images/top.png"
 import TWEEN from "@tweenjs/tween.js"
 
 class Bottle {
@@ -14,6 +14,8 @@ class Bottle {
         this.axis = null
         this.status = "stop"
         this.scale = 1
+        this.flyingTime = 0
+        this.velocity = {}
     }
 
     init() {
@@ -34,7 +36,7 @@ class Bottle {
         // 头部
         let head = new THREE.Mesh(
             new THREE.OctahedronGeometry(headRadius),
-            bottomMaterial
+            meddleMaterial
         )
         head.position.y = 3.57143 * headRadius
         head.castShadow = true
@@ -46,7 +48,7 @@ class Bottle {
 
         let meddle = new THREE.Mesh(
             new THREE.CylinderGeometry(headRadius/1.4, headRadius/1.4 * 0.88, headRadius * 1.2, 20),
-            bottomMaterial
+            headTMaterial
         )
         meddle.position.y = 1.3857 * headRadius
         meddle.castShadow = true
@@ -57,7 +59,7 @@ class Bottle {
         topGeometry.scale(1, 0.54, 1)
         let top = new THREE.Mesh(
             topGeometry,
-            bottomMaterial
+            headTMaterial
         )
         top.position.y = 1.9143 * headRadius
         this.body.add(top)
@@ -80,12 +82,17 @@ class Bottle {
     }
 
     stop() {
+        this.flyingTime = 0
         this.scale = 1
         this.status = "stop"
     }
 
+    jump() {
+        this.status = "jump"
+    }
+
     _strink() {
-        const MIN_SCALE = 0.55
+        const MIN_SCALE = 0.7
         const HORIZON_DELTA_SCALE = 0.007
         const DELTA_SCALE = 0.005
         const HEAD_DELTA = 0.03
@@ -106,11 +113,22 @@ class Bottle {
         
         
         const bottleDeltaY = HEAD_DELTA / 2
-        // this.instance.position.y -= bottleDeltaY
+        this.instance.position.y -= bottleDeltaY
+    }
+
+    _jump(tickTime) {
+        const t = tickTime / 1000
+        this.flyingTime = this.flyingTime + t 
+        const translateH = this.velocity.vx * t
+        const translateY = this.velocity.vy * t - 0.5 * gameConf.gravity * t * t - gameConf.gravity * this.flyingTime * t
+        this.instance.translateY(translateY)
+        this.instance.translateOnAxis(this.axis, translateH)
     }
 
     rotate() {
         const scale = 1.4
+        this.human.rotation.x = 0
+        this.human.rotation.z = 0
         if(this.direction === 0) {
             this.humanTween = new TWEEN.Tween(this.human.rotation).to({
                 z: this.human.rotation.z - Math.PI
@@ -232,8 +250,13 @@ class Bottle {
     update = () => {
         if(this.status === "strink") {
             this._strink()
+        }else if(this.status === "jump") {
+            const tickTime = Date.now() - this.lastFramTime
+            this._jump(tickTime)
         }
+
         this.head.rotation.y += 0.02
+        this.lastFramTime = Date.now()
     }
 
     showUp() {
