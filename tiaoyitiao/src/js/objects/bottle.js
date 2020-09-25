@@ -92,7 +92,7 @@ class Bottle {
     }
 
     _strink() {
-        const MIN_SCALE = 0.7
+        const MIN_SCALE = 0.65
         const HORIZON_DELTA_SCALE = 0.007
         const DELTA_SCALE = 0.005
         const HEAD_DELTA = 0.03
@@ -111,9 +111,9 @@ class Bottle {
 
         this.head.position.y -= HEAD_DELTA
         
-        
         const bottleDeltaY = HEAD_DELTA / 2
-        this.instance.position.y -= bottleDeltaY
+        const deltaY = blockConf.height * DELTA_SCALE / 2
+        this.instance.position.y -= (bottleDeltaY + deltaY * 2)
     }
 
     _jump(tickTime) {

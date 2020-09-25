@@ -16,6 +16,11 @@ class Ground {
         this.instance.rotation.x = Math.PI / -2
         this.instance.position.y = -16 / 3.2
     }
+
+    updatePosition(targetPosition) {
+        this.instance.position.x = targetPosition.x
+        this.instance.position.z = targetPosition.z
+    }
     
 }
 

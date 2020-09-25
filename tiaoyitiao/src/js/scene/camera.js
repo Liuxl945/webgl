@@ -12,8 +12,22 @@ class Camera {
         this.instance.position.x = -10
         this.instance.position.y = 10
         this.instance.position.z = 10
+        this.target = new THREE.Vector3(0, 0, 0)
+        this.instance.lookAt(this.target)
+    }
 
-        this.instance.lookAt(new THREE.Vector3(0, 0, 0))
+    updatePosition(newTargetPosition) {
+        new TWEEN.Tween(this.instance.position).to({
+            x: newTargetPosition.x - 10, 
+            y: newTargetPosition.y + 10, 
+            z: newTargetPosition.z + 10
+        }, 200).start()
+
+        new TWEEN.Tween(this.target).to({
+            x: newTargetPosition.x, 
+            y: newTargetPosition.y, 
+            z: newTargetPosition.z
+        }, 200).start()
     }
 }
 

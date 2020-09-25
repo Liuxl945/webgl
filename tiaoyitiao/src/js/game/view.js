@@ -30,7 +30,7 @@ class GameView {
     initGameOverPage(callbacks) {
         this.gameOverPage = new gameOverPage(callbacks)
         this.gameOverPage.init({
-            scene: this.gamePage.scene
+            scene: this.gamePage.scene.instance
         })
     }
 

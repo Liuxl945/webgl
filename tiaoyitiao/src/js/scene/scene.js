@@ -46,6 +46,11 @@ class Scene {
     render() {
         this.renderer.render(this.instance, this.camera.instance)
     }
+
+    updateCameraPosition(targetPosition) {
+        this.camera.updatePosition(targetPosition)
+        this.light.updatePosition(targetPosition)
+    }
 }
 
 export default new Scene()
