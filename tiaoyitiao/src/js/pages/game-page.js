@@ -74,7 +74,7 @@ class GamePage {
             x: this.bottle.instance.position.x,
             z: this.bottle.instance.position.z,
         }
-        this.axis = new THREE.Vector3(this.targetPosition.x, this.targetPosition.y, this.targetPosition.z)
+        this.axis = new THREE.Vector3(this.targetPosition.x - currentPosition.x, 0, this.targetPosition.z - currentPosition.z)
         this.axis.normalize()
         this.bottle.setDirection(direction, this.axis)
     }
