@@ -118,11 +118,21 @@ class Bottle {
 
     _jump(tickTime) {
         const t = tickTime / 1000
-        this.flyingTime = this.flyingTime + t 
         const translateH = this.velocity.vx * t
         const translateY = this.velocity.vy * t - 0.5 * gameConf.gravity * t * t - gameConf.gravity * this.flyingTime * t
+        
+        this.translateH += translateH
+        this.translateY += translateY
         this.instance.translateY(translateY)
         this.instance.translateOnAxis(this.axis, translateH)
+
+        this.flyingTime = this.flyingTime + t 
+    }
+
+    reset() {
+        this.stop()
+        let { x, y, z } = bottleConf.initPosition
+        this.instance.position.set(x, y + blockConf.height/2, z)
     }
 
     rotate() {

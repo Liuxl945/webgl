@@ -43,6 +43,11 @@ class Scene {
         this.camera.instance.add(this.background.instance)
     }
 
+    reset() {
+        this.camera.reset()
+        this.light.reset()
+    }
+
     render() {
         this.renderer.render(this.instance, this.camera.instance)
     }

@@ -44,6 +44,11 @@ class Light {
             z: 20 + targetPosition.z
         }, 200).start()
     }
+
+    reset() {
+        this.shadowLight.position.set(10, 30, 20)
+        this.shadowTarget.position.set(0, 0, 0)
+    }
 }
 
 export default new Light()
