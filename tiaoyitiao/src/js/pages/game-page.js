@@ -85,6 +85,7 @@ class GamePage {
         this.currentBlock.shrink()
     }
 
+    
     touchEndCallback = () => {
         this.touchEndTime = Date.now()
         const duration = this.touchEndTime - this.touchStartTime
