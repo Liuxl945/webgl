@@ -7,6 +7,17 @@ import gameConf from "../conf/game-conf"
 import bottleConf from "../conf/bottle-conf"
 import blockConf from "../conf/block-conf"
 import utils from "../utils/index"
+import ScoreText from "../view3d/scoreText"
+
+
+const HIT_NEXT_BLOCK_CENTER = 1
+const HIT_CURENT_BLOCK = 2
+const CAME_OVER_NEXT_BLOCK_BACK = 3
+const CAME_OVER_CURRENT_BLOCK = 4
+const CAME_OVER_NEXT_BLOCK_FRONT = 5
+const CAME_OVER_BOTH = 6
+const HIT_NEXT_BLOCK_NOMAL = 7
+
 
 class GamePage {
     constructor(callbacks) {
@@ -14,9 +25,8 @@ class GamePage {
         this.scene = scene
         this.ground = ground
         this.bottle = bottle
-        this.targetPosition = {
-
-        }
+        this.targetPosition = {}
+        this.ScoreText = new ScoreText()
         this.checkingHit = false
         this.state = "stop"
 
@@ -24,15 +34,27 @@ class GamePage {
     }
 
     init() {
-        // this.traingleShape()
         this.scene.init()
         this.ground.init()
         this.bottle.init()
+        this.ScoreText.init({
+            fillStyle: 0x666699
+        })
         this.addInitBlock()
         this.addGround()
         this.addBottle()
+        this.addScore()
         this.bindTouchEvent()
         this.render()
+    }
+
+    addScore() {
+        this.scene.addScore(this.ScoreText.instance)
+    }
+
+    updateScore(score) {
+        this.ScoreText.updateScore(score)
+        this.scene.updateScore(this.ScoreText.instance)
     }
 
     deleteObjectsFromScene() {
@@ -56,15 +78,13 @@ class GamePage {
         this.deleteObjectsFromScene()
         this.scene.reset()
         this.bottle.reset()
+        this.ground.reset()
+        this.score = 0
         this.updateScore(0)
         this.addInitBlock()
         // this.addGround()
         // this.addBottle()
         this.bindTouchEvent()
-    }
-
-    updateScore() {
-        console.log(this.score)
     }
 
     bindTouchEvent() {
@@ -81,7 +101,7 @@ class GamePage {
 
     touchStartCallback = () => {
         this.touchStartTime = Date.now()
-        this.bottle.strink()
+        this.bottle.shrink()
         this.currentBlock.shrink()
     }
 
@@ -276,77 +296,6 @@ class GamePage {
         }
         return result1 || result2 || 0
     }
-
-    traingleShape() {
-        let width = window.innerWidth
-        let height = window.innerHeight
-        let canvas = document.querySelector("#myCanvas")
-
-        let renderer = new THREE.WebGLRenderer({
-            canvas: canvas,
-        })
-
-
-        let scene = new THREE.Scene()
-        this.scene = scene
-
-        let traingleShape = new THREE.Shape()
-        traingleShape.moveTo(0, width / 4)
-        traingleShape.lineTo(-width / 4, -width / 4)
-        traingleShape.lineTo(width / 4, -width / 4)
-        traingleShape.lineTo(0, width / 4)
-
-        let geometry = new THREE.ShapeGeometry(traingleShape)
-        let meterial = new THREE.MeshBasicMaterial({
-            color: 0xff0000,
-            side: THREE.DoubleSide
-        })
-
-        let mesh = new THREE.Mesh(geometry, meterial)
-        this.mesh = mesh
-
-        let axesHelper = new THREE.AxesHelper(150)
-        scene.add(axesHelper)
-
-        mesh.position.x = 0
-        mesh.position.y = 0
-        mesh.position.z = 1
-
-        // scene.add(mesh)
-
-
-        let camera = new THREE.OrthographicCamera(-30, 30, 56, -56, -100, 85)
-        camera.position.x = -10
-        camera.position.y = 10
-        camera.position.z = 10
-        camera.lookAt(new THREE.Vector3(0, 0, 0))
-
-        let currentAngle = 0
-        let lastTimestamp = Date.now()
-
-        function animate() {
-            let now = Date.now()
-            let duration = now - lastTimestamp
-            lastTimestamp = now
-            currentAngle += (duration / 1000 * Math.PI)
-        }
-
-
-
-        renderer.setClearColor(new THREE.Color(0x000000))
-        renderer.setSize(width, height)
-
-        function render() {
-            animate()
-            mesh.rotation.set(0, currentAngle, 0)
-            renderer.render(scene, camera)
-
-
-            requestAnimationFrame(render)
-        }
-        render()
-    }
-
 }
 
 export default GamePage

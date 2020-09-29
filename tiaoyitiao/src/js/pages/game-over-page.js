@@ -63,7 +63,7 @@ class GameOverPage {
         
         const pageX = e.changedTouches[0].pageX
         const pageY = e.changedTouches[0].pageY
-        console.log(this.region,pageX,pageY)
+        // console.log(this.region,pageX,pageY)
         if (pageX > this.region[0] && pageX < this.region[1] && pageY > this.region[2] && pageY < this.region[3]) { // restart
             this.callbacks.gameRestart()
             

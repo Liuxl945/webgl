@@ -77,8 +77,8 @@ class Bottle {
         this.instance.add(this.bottle)
     }
 
-    strink() {
-        this.status = "strink"
+    shrink() {
+        this.status = "shrink"
     }
 
     stop() {
@@ -258,7 +258,7 @@ class Bottle {
     }
 
     update = () => {
-        if(this.status === "strink") {
+        if(this.status === "shrink") {
             this._strink()
         }else if(this.status === "jump") {
             const tickTime = Date.now() - this.lastFramTime
