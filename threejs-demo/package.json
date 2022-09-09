@@ -1,0 +1,20 @@
+{
+  "name": "threejs-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "source": "./src/index.html",
+  "scripts": {
+    "dev": "parcel",
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  },
+  "dependencies": {
+    "three": "^0.144.0"
+  }
+}
