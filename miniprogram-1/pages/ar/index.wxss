@@ -1,0 +1,32 @@
+
+camera {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.canvas1{
+    position:absolute;
+    height:100%;
+    width:100%;
+    z-index: 3;
+}
+
+#capture {
+  position: absolute;
+  left: 750rpx;
+}
+
+.cover-view{
+    color:#00B0CF;
+    background:#000000;
+    opacity:0.6;
+    padding:15px;
+    position:absolute;
+    text-align:center;
+    width:50%;
+    margin-left:-25%;
+    left:50%;
+    bottom:50px;
+}

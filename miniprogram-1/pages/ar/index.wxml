@@ -1,0 +1,21 @@
+
+
+<camera frame-size="medium"
+  bindinitdone="onCameraInit"
+  mode="normal"
+  device-position="back"
+  resolution="high"
+  flash="off"/>
+
+<canvas
+  id="canvas1"
+  class="canvas1"
+  type="webgl"
+  disable-scroll = "true"
+  bindtouchend="bindtouchend_callback">
+</canvas>
+
+<canvas type="2d"
+  id="capture"
+  style="width:1px; height: 1px;"/>
+

@@ -1,0 +1,108 @@
+camera {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+#canvas1 {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 12;
+}
+
+#capture {
+  position: absolute;
+  left: 750rpx;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(63, 63, 63, 0.6);
+  z-index: 30;
+}
+
+#overlay-top {
+  position: absolute;
+  margin: 60rpx 44rpx 0 54rpx;
+  left: 0;
+  right: 0;
+}
+
+#title {
+  position: absolute;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 46rpx;
+}
+
+#logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 178rpx;
+  height: 54rpx;
+}
+
+#desc {
+  position: absolute;
+  top: 106rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 46rpx;
+}
+
+#overlay-bottom {
+  position: absolute;
+  width: 540rpx;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+}
+
+#loading {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 40;
+}
+
+.primary-button {
+  width: 540rpx;
+  height: 112rpx;
+  margin-top: 22rpx;
+  text-align: center;
+
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 112rpx;
+}
+.secondary-button {
+  width: 540rpx;
+  height: 80rpx;
+  margin-top: 22rpx;
+  text-align: center;
+
+  font-size: 24rpx;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  font-weight: 500;
+  color: #EDEDED;
+  line-height: 80rpx;
+}
