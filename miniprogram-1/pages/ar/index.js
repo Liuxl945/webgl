@@ -7,7 +7,7 @@ const cameraBusiness = require('./utils/cameraBusiness.js')
 // 画布id
 const canvasId = 'canvas1';
 // 机器人模型，带动画。
-const robotUrl = 'https://m.sanyue.red/demo/gltf/robot.glb';
+const robotUrl = '/images/robot.glb';
 // webgl画面录制器的帧数
 const recorderFPS = 30
 // 画布组件

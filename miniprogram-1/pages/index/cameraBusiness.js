@@ -13,8 +13,10 @@ let canvas
 let camera
 let scene
 let clock
+let mixers = []
+let mainModel
 // 模型的默认缩放大小
-const modelScale = 0.05;
+const modelScale = 0.2;
 
 // 创建threejs场景
 function initTHREE(canvasDom) {
@@ -81,7 +83,8 @@ function loadModel(modelUrl, callback) {
 			console.log('loadModel', 'success');
 			wx.hideLoading();
 			var model = gltf.scene;
-			model.scale.set(modelScale, modelScale, modelScale)
+      model.scale.set(modelScale, modelScale, modelScale)
+      model.position.set(0, -0.5, 0)
 			mainModel = model;
 			var animations = gltf.animations;
 

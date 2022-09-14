@@ -7,3 +7,6 @@
   bindtouchend="bindtouchend_callback">
 </canvas>
 
+<canvas type="2d"
+  id="capture"/>
+

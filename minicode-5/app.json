@@ -1,13 +1,11 @@
 {
   "pages":[
-    "pages/ar_back/index",
-    "pages/ar/index",
-    "pages/index/index"
+    "index/index"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "AR",
+    "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle":"black"
   },
   "style": "v2",

@@ -5,7 +5,7 @@ const cameraBusiness = require('./utils/cameraBusiness.js')
 // 画布id
 const canvasId = 'canvas1';
 // 机器人模型，带动画。
-const robotUrl = 'https://m.sanyue.red/demo/gltf/robot.glb';
+const robotUrl = '/images/robot.glb';
 // 画布组件
 var canvas1;
 // webgl画面录制器
@@ -37,9 +37,7 @@ Page({
         console.info(err);
     });
 
-    
     this.init3DAr()
-    
   },
 
   init3DAr() {
@@ -58,6 +56,11 @@ Page({
           cameraBusiness.initWorldTrack(model)
           // 加载3D模型的动画
           cameraBusiness.createAnimation(model, animations, 'Dance')
+        })
+
+
+        canvas1.requestAnimationFrame(fram => {
+          console.log(fram)
         })
       })
   },

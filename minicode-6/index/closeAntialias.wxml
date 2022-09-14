@@ -1,0 +1,3 @@
+<canvas class="canvas" type="webgl" id="render"></canvas>
+
+<canvas id="canvas" type="2d"></canvas>

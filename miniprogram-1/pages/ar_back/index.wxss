@@ -15,7 +15,10 @@ camera {
 
 #capture {
   position: absolute;
-  left: 750rpx;
+  width: 100vw;
+  height: 100vh;
+  left: 350rpx;
+  background: darkcyan;
 }
 
 .cover-view{

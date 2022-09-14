@@ -18,7 +18,7 @@ const SELECT_TYPE = {
 // 画布id
 const canvasId = 'canvas1';
 // 模型
-const boomboxUrl = 'https://m.sanyue.red/demo/gltf/robot.glb';
+const boomboxUrl = '/images/robot.glb';
 
 Page({
   data: {
@@ -107,7 +107,6 @@ Page({
       })
       .exec((res) => {
 
-        console.log(res[0])
         const canvas = res[0].node;
 
         //设置canvas内部尺寸为480*640，frame-size="medium"的设置下相机帧大多是480*640
@@ -151,15 +150,25 @@ Page({
 
       console.log("开始识别")
 
+      this.number = this.number ? (++this.number) : 1
+
+      if(this.number > 5) {
+        console.log("识别成功");
+        this.runningCrs = false;
+        this.hideLoading();
+        this.onResult()
+        return
+      }
+
       if (result.target) {
         console.log("识别成功", result.target.targetId);
         this.runningCrs = false;
         this.hideLoading();
-
         // todo: 解析meta中的信息，触发业务逻辑
 
         //如果待触发的id列表中存在识别到的这个id，就触发
         if (this.data.targetIds.find(targetId => targetId === result.target.targetId)) {
+          
           this.onResult(result.target);
         }
       } else {
@@ -173,6 +182,9 @@ Page({
   },
 
   onResult: function (target) {
+
+    this.initModel()
+
     console.log("触发内容!");
     if (target.meta) {
       console.log("meta base64:", target.meta);
@@ -196,8 +208,7 @@ Page({
     this.hideLoading();
   },
 
-  experience: function () {
-
+  initModel() {
     wx.createSelectorQuery()
       .select('#' + canvasId)
       .node()
@@ -209,8 +220,11 @@ Page({
           cameraBusiness.createAnimation(model, animations, 'Dance')
         })
       })
+  },
 
-    
+  experience: function () {
+
+    this.initModel()
 
     this.setData({
       showOverlay: false,
