@@ -34,6 +34,7 @@ Page({
   data: {
     menuButtonTop: 32,
     menuButtonHeight: 33,
+    showOverlay: true
   },
   onReady() {
     // 获取token
@@ -58,12 +59,12 @@ Page({
         // 启动AR会话
         cameraBusiness.initEnvironment(canvas1)
         // 加载3D模型
-        // cameraBusiness.loadModel(robotUrl, function (model, animations) {
-        //   // 创建AR的坐标系
-        //   cameraBusiness.initWorldTrack(model)
-        //   // 加载3D模型的动画
-        //   cameraBusiness.createAnimation(model, animations, 'Dance')
-        // })
+        cameraBusiness.loadModel(robotUrl, function (model, animations) {
+          // 创建AR的坐标系
+          cameraBusiness.initWorldTrack(model)
+          // 加载3D模型的动画
+          cameraBusiness.createAnimation(model, animations, 'Dance')
+        })
         // webgl画面录制器
       })
   },
@@ -106,6 +107,23 @@ Page({
     // 在手指点击的位置放置3D模型 
     cameraBusiness.addModelByHitTest(event, false, false)
   },
+
+  experience: function () {
+
+    this.setData({
+      showOverlay: false,
+    });
+    this.init3DAr()
+  },
+
+  scan: function () {
+    this.runningCrs = true;
+    this.setData({
+      showOverlay: false,
+    });
+    this.showLoading("识别中");
+  },
+
 
   queryImage: function (frame) {
     if (!this.runningCrs || this.busy || !this.crsClient) return;

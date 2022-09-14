@@ -30,3 +30,78 @@ camera {
     left:50%;
     bottom:50px;
 }
+
+
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(63, 63, 63, 0.6);
+  z-index: 30;
+}
+
+#overlay-top {
+  position: absolute;
+  margin: 60rpx 44rpx 0 54rpx;
+  left: 0;
+  right: 0;
+}
+
+#title {
+  position: absolute;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 46rpx;
+}
+
+#logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 178rpx;
+  height: 54rpx;
+}
+
+#desc {
+  position: absolute;
+  top: 106rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 46rpx;
+}
+
+#overlay-bottom {
+  position: absolute;
+  width: 540rpx;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+}
+
+.primary-button {
+  width: 540rpx;
+  height: 112rpx;
+  margin-top: 22rpx;
+  text-align: center;
+
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 112rpx;
+}
+
+#overlay-top {
+  position: absolute;
+  margin: 60rpx 44rpx 0 54rpx;
+  left: 0;
+  right: 0;
+}

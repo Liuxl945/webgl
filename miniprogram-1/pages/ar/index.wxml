@@ -15,6 +15,23 @@
   bindtouchend="bindtouchend_callback">
 </canvas>
 
+
+<view id="overlay" wx:if="{{showOverlay}}">
+  <view id="overlay-top">
+      <view id="title">微信小程序AR</view>
+      <!-- <image id="logo" src="/images/logo@2x.png"></image> -->
+      <!-- <view id="desc">帮助您迅速在微信小程序中实现扫描识别图呈现3D动画模型、视频、图片、文字、UI按钮等效果，并且支持3D模型交互。区别于原生 AR 应用，具有模式轻、部署快、传播性强等特点。</view> -->
+  </view>
+  <view id="overlay-bottom">
+      <image id="experience" class="primary-button" src="/images/experience@2x.png" bind:tap="experience"></image>
+      <image id="scan" class="primary-button" src="/images/scan@2x.png" bind:tap="scan"></image>
+      <view id="download" class="primary-button"></view>
+      <view id="email" class="secondary-button"></view>
+  </view>
+</view>
+
+
+
 <canvas type="2d"
   id="capture"
   style="width:1px; height: 1px;"/>
