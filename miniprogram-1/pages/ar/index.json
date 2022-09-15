@@ -2,5 +2,8 @@
     "navigationBarTitleText": "",
     "disableScroll": true,
     "navigationStyle":"custom",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle":"white",
+    "usingComponents": {
+      "loading": "/components/loading/loading"
+    }
 }

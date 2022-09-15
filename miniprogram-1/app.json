@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/camera3d/camera",
     "pages/ar/index",
     "pages/ar_back/index",
     "pages/index/index"

@@ -1,5 +1,9 @@
-import { CrsClient } from "../../utils/crsClient";
-import { CryptoJS } from "../../utils/CryptoJS";
+import {
+  CrsClient
+} from "../../utils/crsClient";
+import {
+  CryptoJS
+} from "../../utils/CryptoJS";
 
 
 
@@ -34,25 +38,30 @@ Page({
   data: {
     menuButtonTop: 32,
     menuButtonHeight: 33,
-    showOverlay: true
+    showOverlay: true,
+    showLoadingText: "",
+    showLoading: false
   },
   onReady() {
     // 获取token
     this.queryToken().then(msg => {
       config.token = msg.result.token;
     }).catch(err => {
-        console.info(err);
+      console.info(err);
     });
   },
 
   init3DAr() {
 
     listener.stop();
-    
+
     // 获取画布组件
     wx.createSelectorQuery()
       .select('#' + canvasId)
-      .fields({ node: true, size: true })
+      .fields({
+        node: true,
+        size: true
+      })
       .exec(res => {
         // 画布组件
         canvas1 = res[0].node
@@ -71,12 +80,12 @@ Page({
 
 
   onCameraInit() {
-    this.runningCrs = true
-    console.log(111)
-
     wx.createSelectorQuery()
       .select('#capture')
-      .fields({ node: true, size: true })
+      .fields({
+        node: true,
+        size: true
+      })
       .exec((res) => {
         const canvas = res[0].node;
 
@@ -89,7 +98,7 @@ Page({
         listener.start();
 
       })
-    
+
   },
 
   onUnload() {
@@ -105,7 +114,7 @@ Page({
   bindtouchend_callback(event) {
     console.log('bindtouchend_callback')
     // 在手指点击的位置放置3D模型 
-    cameraBusiness.addModelByHitTest(event, false, false)
+    canvas1 && cameraBusiness.addModelByHitTest(event, false, false)
   },
 
   experience: function () {
@@ -124,6 +133,18 @@ Page({
     this.showLoading("识别中");
   },
 
+  showLoading(text) {
+    this.setData({
+      showLoading: true,
+      showLoadingText: text,
+    });
+  },
+  hideLoading() {
+    this.setData({
+      showLoading: false,
+    });
+  },
+
 
   queryImage: function (frame) {
     if (!this.runningCrs || this.busy || !this.crsClient) return;
@@ -138,18 +159,18 @@ Page({
     this.crsClient.queryImage(frame).then(res => {
 
       this.number = this.number ? (++this.number) : 1
-      
+
       if (!this.runningCrs) return; //避免在停止后仍然触发
       let result = res && res.result;
       if (!result) return;
-      
+
       console.log(this.number)
 
       if (result.target || this.number > 5) {
 
         this.init3DAr()
 
-        console.log("识别成功", result.target.targetId);
+        console.log("识别成功");
         this.runningCrs = false;
         this.hideLoading();
 
@@ -184,28 +205,28 @@ Page({
   /**
    * 生成token
    */
-  queryToken: function() {
+  queryToken: function () {
     const obj = {
-        'apiKey': config.apiKey,
-        'expires': 86400,
-        'timestamp': Date.now(),
-        'acl': `[{"service":"ecs:crs","effect":"Allow","resource":["${config.crsAppId}"],"permission":["READ","WRITE"]}]`
+      'apiKey': config.apiKey,
+      'expires': 86400,
+      'timestamp': Date.now(),
+      'acl': `[{"service":"ecs:crs","effect":"Allow","resource":["${config.crsAppId}"],"permission":["READ","WRITE"]}]`
     };
 
     const str = Object.keys(obj).sort().map(k => k + obj[k]).join('');
     obj.signature = CryptoJS.SHA256(str + config.apiSecret, '').toString();
 
     return new Promise((resolve, reject) => {
-        wx.request({
-            url: 'https://uac.easyar.com/token/v2',
-            method: 'post',
-            data: obj,
-            header: {
-                'content-type': 'application/json'
-            },
-            success: res => resolve(res.data),
-            fail: err => reject(err),
-        });
+      wx.request({
+        url: 'https://uac.easyar.com/token/v2',
+        method: 'post',
+        data: obj,
+        header: {
+          'content-type': 'application/json'
+        },
+        success: res => resolve(res.data),
+        fail: err => reject(err),
+      });
     });
   },
 

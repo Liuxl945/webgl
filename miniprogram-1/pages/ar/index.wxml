@@ -30,6 +30,10 @@
   </view>
 </view>
 
+<view id="loading" wx:if="{{showLoading}}">
+    <loading text="{{showLoadingText}}"></loading>
+</view>
+
 
 
 <canvas type="2d"

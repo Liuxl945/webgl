@@ -1,0 +1,23 @@
+<view class="container">
+     <camera 
+        device-position="{{devicePosition}}" 
+        flash="off" 
+        frame-size="medium"
+        binderror="onError_callback"
+        class="camera1">
+      </camera>
+      <canvas
+            id="canvas1"
+            class="canvas1"
+            type="webgl"
+            disable-scroll = "true"
+            bindtouchstart="bindtouchstart_callback"
+            bindtouchmove="bindtouchmove_callback">
+      </canvas>
+</view>
+
+<canvas type="2d"
+          id="capture"
+          style="width:1px; height: 1px;"/>
+
+
