@@ -1,3 +1,6 @@
 {
-    "navigationBarTitleText": "3D Viewer"
+    "navigationBarTitleText": "3D Viewer",
+    "usingComponents": {
+      "loading": "/components/loading/loading"
+    }
 }

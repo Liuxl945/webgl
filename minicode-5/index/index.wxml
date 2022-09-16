@@ -1,4 +1,0 @@
-<!--index.wxml-->
-<canvas class="canvas" id="gl" type="webgl" bindtouchstart="onTS" bindtouchmove="onTM" bindtouchend="onTE"></canvas>
-<canvas id="canvas" type="2d"></canvas>
-<cover-view class="btn" bindtap="onBtnClick">截图</cover-view>

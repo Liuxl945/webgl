@@ -75,13 +75,17 @@ function loadModel(modelUrl) {
     wx.showLoading({
         title: 'Loading Model...',
     });
-    loader.load(modelUrl,
+
+    return new Promise(resolve => {
+      loader.load(modelUrl,
         function (gltf) {
             var model = gltf.scene;
             // save model
             mainModel = model;
             scene.add(model);
             wx.hideLoading();
+
+            resolve()
         },
         null,
         function (error) {
@@ -91,7 +95,11 @@ function loadModel(modelUrl) {
                 icon: 'none',
                 duration: 3000,
             });
+
+            resolve()
         });
+    })
+    
 }
 
 function updateModel(modelUrl) {
