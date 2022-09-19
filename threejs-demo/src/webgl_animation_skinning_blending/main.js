@@ -49,6 +49,9 @@ function init() {
         object.castShadow = true;
       }
     });
+    
+    createPanel()
+
 
     const animations = gltf.animations;
     mixer = new THREE.AnimationMixer( model );
@@ -64,7 +67,6 @@ function init() {
     scene.add( skeleton );
 
     activateAllActions()
-    createPanel()
     animate();
 
   })
@@ -110,7 +112,12 @@ function createPanel() {
     'activate all': activateAllActions,
 
 
-    
+
+    'modify idle weight': 0.0,
+    'modify walk weight': 1.0,
+    'modify run weight': 0.0,
+
+
   }
 
   folder1.add( settings, 'show model' ).onChange( visibility => model.visible = visibility );
@@ -161,7 +168,7 @@ function animate() {
   walkWeight = walkAction.getEffectiveWeight()
   runWeight = runAction.getEffectiveWeight()
 
-  updateWeightSliders()
+  // updateWeightSliders()
   // updateCrossFadeControls()
 
   let mixerUpdateDelta = clock.getDelta()
