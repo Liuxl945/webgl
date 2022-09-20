@@ -10,6 +10,9 @@ let model, skeleton, mixer, clock
 
 let actions, settings
 
+let sizeOfNextStep = 0
+let singleStepMode = false
+
 function init() {
 
   const container = document.getElementById( 'container' );
@@ -30,7 +33,18 @@ function init() {
   dirLight.shadow.camera.far = 40;
   scene.add( dirLight );
 
-  const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshPhongMaterial( { color: 0xff9999, depthWrite: false } ) );
+
+  const dirLight2 = new THREE.DirectionalLight( 0xffffff );
+  dirLight2.position.set( - 10, 10, 10 );
+  scene.add( dirLight2 );
+
+  const dirLight3 = new THREE.DirectionalLight( 0xffffff );
+  dirLight3.position.set( 10, 10, 10 );
+  scene.add( dirLight3 );
+
+
+
+  const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 100, 100 ), new THREE.MeshPhongMaterial( { color: 0x666666, depthWrite: false } ) );
   mesh.rotation.x = - Math.PI / 2;
   mesh.receiveShadow = true;
   scene.add( mesh );
@@ -111,11 +125,16 @@ function createPanel() {
     'deactivate all': deactivateAllActions,
     'activate all': activateAllActions,
 
+    'pause/continue': pauseContinue,
+    'make single step': toSingleStepMode,
+    'modify step size': 0.05,
 
 
     'modify idle weight': 0.0,
     'modify walk weight': 1.0,
     'modify run weight': 0.0,
+
+    'modify time scale': 1.0
 
 
   }
@@ -125,8 +144,59 @@ function createPanel() {
 
   folder2.add( settings, 'deactivate all' );
   folder2.add( settings, 'activate all' );
+
+  folder3.add( settings, 'pause/continue' );
+  folder3.add( settings, 'make single step' );
+  folder3.add( settings, 'modify step size', 0.01, 0.1, 0.001 );
+
+  folder6.add( settings, 'modify time scale', 0.0, 1.5, 0.01 ).onChange( speed => mixer.timeScale = speed )
   
 }
+
+function pauseAllActions() {
+
+  actions.forEach( function ( action ) {
+
+    action.paused = true;
+
+  } );
+
+}
+
+function unPauseAllActions() {
+
+  singleStepMode = false
+
+  actions.forEach( function ( action ) {
+
+    action.paused = false;
+
+  } );
+
+}
+
+function pauseContinue() {
+
+  if(singleStepMode) {
+    singleStepMode = false
+    unPauseAllActions()
+    return
+  }
+
+  if ( idleAction.paused ) {
+    unPauseAllActions()
+  } else {
+    pauseAllActions()
+  }
+}
+
+function toSingleStepMode() {
+  unPauseAllActions()
+
+  singleStepMode = true
+  sizeOfNextStep = settings[ 'modify step size' ];
+}
+
 
 function setWeight( action, weight ) {
   action.enabled = true
@@ -146,11 +216,12 @@ function activateAllActions() {
   setWeight( walkAction, settings[ 'modify walk weight' ] )
   setWeight( runAction, settings[ 'modify run weight' ] )
 
+  
+  unPauseAllActions()
+
   actions.forEach( function ( action ) {
-    console.log(action)
     action.play()
   } )
-
 }
 
 function updateWeightSliders() {
@@ -172,6 +243,12 @@ function animate() {
   // updateCrossFadeControls()
 
   let mixerUpdateDelta = clock.getDelta()
+
+  if ( singleStepMode ) {
+    mixerUpdateDelta = sizeOfNextStep
+    sizeOfNextStep = 0
+  }
+
   mixer.update( mixerUpdateDelta )
 
 

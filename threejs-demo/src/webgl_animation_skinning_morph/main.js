@@ -6,22 +6,11 @@ import Stats from 'three/examples/jsm/libs/stats.module.js';
 
 
 let scene, renderer, camera, stats
-let model, mixer, clock
-
-let panelSettings
-const crossFadeControls = []
-
-const baseActions = {
-  idle: { weight: 1 },
-  walk: { weight: 0 },
-  run: { weight: 0 }
-}
+let model
 
 function init() {
 
   const container = document.getElementById( 'container' );
-
-  clock = new THREE.Clock()
   
   scene = new THREE.Scene();
   scene.background = new THREE.Color( 0xa0a0a0 );
@@ -58,25 +47,6 @@ function init() {
       }
     });
 
-
-    const animations = gltf.animations
-    mixer = new THREE.AnimationMixer( model )
-
-    for ( let i = 0; i !== animations.length; ++ i ) {
-      let clip = animations[ i ]
-      const name = clip.name
-
-      if ( baseActions[ name ] ) {
-        const action = mixer.clipAction( clip )
-        console.log(name, action)
-        activateAction(action)
-        
-        baseActions[ name ].action = action
-      }
-
-    }
-
-
     createPanel()
     animate();
 
@@ -108,76 +78,18 @@ function init() {
   container.appendChild( renderer.domElement );
 }
 
-
-function activateAction( action ) {
-  const clip = action.getClip()
-  const settings = baseActions[ clip.name ]
-  setWeight( action, settings.weight )
-  action.play()
-}
-
-function setWeight( action, weight ) {
-  action.enabled = true
-  action.setEffectiveTimeScale( 1 )
-  action.setEffectiveWeight( weight )
-} 
-
-
-
 function createPanel() {
   const panel = new GUI( { width: 310 } );
   const folder1 = panel.addFolder( 'Base Actions' );
   const folder2 = panel.addFolder( 'Additive Action Weights' );
   const folder3 = panel.addFolder( 'General Speed' );
-
-  panelSettings = {
-    'modify time scale': 1.0,
-    'None': stopActions,
-    'idle': idleActions,
-    'walk': walkActions,
-    'run': runActions,
-  };
-
-  const baseNames = [ 'None', ...Object.keys( baseActions ) ];
-
-  for ( let i = 0, l = baseNames.length; i !== l; ++ i ) {
-    const name = baseNames[ i ]
-    const settings = baseActions[ name ]
-    
-    // panelSettings[ name ] = () => {
-      
-    // }
-
-    crossFadeControls.push( folder1.add( panelSettings, name ) )
-  }
   
 }
-
-function runActions() {
-  console.log(baseActions)
-}
-
-function walkActions() {
-
-}
-
-function idleActions() {
-
-}
-
-function stopActions() {
-
-}
-
 
 
 function animate() {
   requestAnimationFrame( animate );
 
-
-  const mixerUpdateDelta = clock.getDelta()
-
-  mixer.update( mixerUpdateDelta )
 
   stats.update();
   renderer.render( scene, camera );
