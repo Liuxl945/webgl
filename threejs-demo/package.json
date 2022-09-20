@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "source": "./src/webgl_animation_skinning_additive_blending/index.html",
+  "source": "./src/webgl_animation_multiple/index.html",
   "scripts": {
     "dev": "parcel",
     "start": "parcel",
