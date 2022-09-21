@@ -4,7 +4,6 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader"
 import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils"
 import Stats from "three/examples/jsm/libs/stats.module"
 
-
 let scene, renderer, camera, stats
 let mixers = [], clock
 
@@ -77,7 +76,7 @@ function init() {
   renderer.outputEncoding = THREE.sRGBEncoding
   renderer.shadowMap.enabled = true
 
-  const controls = new OrbitControls( camera, renderer.domElement )
+  const controls = new OrbitControls(camera, renderer.domElement)
   controls.enablePan = false
   controls.enableZoom = false
   controls.update()
@@ -97,9 +96,7 @@ function animate() {
   requestAnimationFrame(animate)
 
   const delta = clock.getDelta()
-  
-  for ( const mixer of mixers ) mixer.update( delta )
-
+  for (const mixer of mixers) mixer.update(delta)
 
   renderer.render(scene, camera)
 }
