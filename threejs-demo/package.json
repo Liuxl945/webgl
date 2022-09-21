@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "source": "./src/webgl_materials_car/index.html",
+  "source": "./src/webgl_shaders_ocean/index.html",
   "scripts": {
     "dev": "parcel",
     "start": "parcel",
