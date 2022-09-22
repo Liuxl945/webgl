@@ -2,7 +2,7 @@
   "name": "threejs-demo",
   "version": "1.0.0",
   "description": "",
-  "source": "src/webgl_shaders_ocean/index.html",
+  "source": "src/webgl_shadowmap_pcss/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "staticFiles": {
     "staticPath": "public"

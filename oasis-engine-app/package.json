@@ -1,0 +1,22 @@
+{
+  "name": "oasis-engine-app",
+  "version": "1.0.0",
+  "description": "oasis-engine-app",
+  "source": "src/index.html",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "oasis-engine-app"
+  ],
+  "author": "lxl",
+  "license": "ISC",
+  "dependencies": {
+    "oasis-engine": "^0.8.0-beta.26",
+    "oasis-engine-toolkit": "^0.8.0-beta.3",
+    "parcel": "^2.7.0",
+    "parcel-reporter-static-files-copy": "^1.4.0"
+  }
+}
