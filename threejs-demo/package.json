@@ -2,17 +2,21 @@
   "name": "threejs-demo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "source": "./src/webgl_shaders_ocean/index.html",
+  "source": "src/webgl_shaders_ocean/index.html",
+  "staticFiles": {
+    "staticPath": "public"
+  },
   "scripts": {
-    "dev": "parcel",
+    "dev": "parcel --open",
     "start": "parcel",
     "build": "parcel build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.7.0"
+    "parcel": "^2.7.0",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "parcel-reporter-static-files-copy": "^1.4.0"
   },
   "dependencies": {
     "three": "^0.144.0"
