@@ -3,19 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "source": "src/webgl_shaders_ocean/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "staticFiles": {
     "staticPath": "public"
   },
   "scripts": {
     "dev": "parcel --open",
     "start": "parcel",
-    "build": "parcel build"
+    "build": "parcel build --no-source-maps --dist-dir dist",
+    "build:analyzer": "parcel build --no-source-maps --reporter @parcel/reporter-bundle-analyzer --dist-dir dist"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/reporter-bundle-analyzer": "^2.7.0",
     "parcel": "^2.7.0",
-    "parcel-plugin-static-files-copy": "^2.6.0",
     "parcel-reporter-static-files-copy": "^1.4.0"
   },
   "dependencies": {
