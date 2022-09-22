@@ -9,7 +9,8 @@ let controls, water, sun, sky, mesh, renderTarget, pmremGenerator
 
 const parameters = {
   elevation: 2,
-  azimuth: 180
+  azimuth: 180,
+  add: true
 }
 
 
@@ -111,15 +112,22 @@ function animate() {
   mesh.rotation.x = time * 0.5
   mesh.rotation.z = time * 0.51
 
-  // if(parameters.elevation <= 0) {
-  //   parameters.elevation += 0.01
-  // }
-  // else if(parameters.elevation <= 50) {
-  //   parameters.elevation -= 0.01
-  // }
-  // updateSun()
-  
+  if(parameters.add) {
+    parameters.elevation += 0.01
 
+    if(parameters.elevation >= 20) {
+      parameters.add = false
+    }
+  }else {
+    parameters.elevation -= 0.01
+
+    if(parameters.elevation <= 0) {
+      parameters.add = true
+    }
+  }
+
+  console.log(parameters.elevation)
+  updateSun()
 
   water.material.uniforms[ 'time' ].value += 1.0 / 60.0
 
