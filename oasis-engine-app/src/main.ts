@@ -24,6 +24,11 @@
 import * as TWEEN from "@tweenjs/tween.js";
 import { LitePhysics } from "@oasis-engine/physics-lite";
 
+
+import('./console').then(page => {
+  page.default.console()
+})
+
 enum EnumBirdState {
   Alive = 0,
   Dead = 1
