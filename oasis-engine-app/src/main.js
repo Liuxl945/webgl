@@ -1,8 +1,6 @@
 import { WebGLEngine, Camera, Color, DirectLight, Vector3, Animator, MeshRenderer, PrimitiveMesh, BlinnPhongMaterial, GLTFResource } from 'oasis-engine'
-import { OrbitControl } from 'oasis-engine-toolkit'
+import { OrbitControl } from '@oasis-engine/controls'
 
-
-console.log(OrbitControl)
 
 // Init Engine
 const engine = new WebGLEngine("canvas")
@@ -21,7 +19,7 @@ cameraEntity.addComponent(OrbitControl)
 
 const crbitControl = cameraEntity.getComponent(OrbitControl)
 
-crbitControl.target = new Vector3(0, 0, 0)
+crbitControl.target = new Vector3(0, 1, 0)
 
 
 // scene.background.solidColor = new Color(1, 1, 1, 1)
